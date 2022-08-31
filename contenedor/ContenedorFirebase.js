@@ -1,7 +1,5 @@
 class ContenedorFirebase {
-    constructor(collection){
-        this.collection = collection;
-    }
+    constructor(){}
 
     async created(doc, collectionData){
         await doc.create(collectionData);
