@@ -1,11 +1,18 @@
+import mongoose from "mongoose";
+
+await mongoose.connect('mongodb://localhost:27017/segFinal');
 class ContenedorMongo {
     constructor(modelo){
         this.modelo = modelo;
     }
 
-    async created(dataModelo){
-        const nuevoElemento = new this.modelo(dataProducto);
-        await nuevoElemento.save();
+    async created(nuevoElemento){
+        const crearElemento = new this.modelo(nuevoElemento);
+        await crearElemento.save();
+        return {
+            ...nuevoElemento,
+            id: crearElemento.id
+        };
     }
 
     async read(){
@@ -13,14 +20,24 @@ class ContenedorMongo {
         return elementos;
     }
 
-    async update(objEncontrar, objNuevo){
+    async update(idElemento, nuevoElemento){
         const elementoActualizar = await this.modelo.findOneAndUpdate({
-            objEncontrar,
-            objNuevo
+            idElemento,
+            nuevoElemento
         });
+        return elementoActualizar;
     }
 
-    async delete(objEliminar){
-        const elementoEliminar = await this.modelo.deleteOne(objEliminar);
+    async delete(idElemento){
+        const elementoEliminar = await this.modelo.deleteOne(idElemento);
+        return elementoEliminar;
+    }
+
+    async desconectar(){
+        try {
+            mongoose.disconnect();
+        }catch(error){
+            console.log(error);
+        }
     }
 }
