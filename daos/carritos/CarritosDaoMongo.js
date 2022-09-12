@@ -1,5 +1,5 @@
-import ContenedorMongo from '../../contenedor/ContenedorMongo.js';
-import { Carrito } from './models/Carrito.js';
+import ContenedorMongo from '../../contenedor/ContenedorMongo';
+import { Carrito } from '../../models/Carrito.js';
 class CarritosDaoMongo extends ContenedorMongo {
     constructor(){
         super(Carrito);
@@ -7,6 +7,11 @@ class CarritosDaoMongo extends ContenedorMongo {
 
     async guardar(carrito){
         return super.created(carrito);
+    }
+    
+    async readOne(id){
+        const elemento = await this.modelo.find({'_id': id});
+        return elemento;
     }
 }
 

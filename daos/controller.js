@@ -5,11 +5,11 @@ let carritosDao;
 
 switch (variableEntorno) {
     case 'mongo':
-        const daoProductosMongo = import('./productos/ProductosDaoMongo');
-        const daoCarritosMongo = import('./carritos/CarritosDaoMongo');
+        const { default: ProductosDaoMongo } =  await import('./productos/ProductosDaoMongo.js');
+        const { default: CarritosDaoMongo } = await import('./carritos/CarritosDaoMongo.js');
 
-        productosDao = new daoProductosMongo();
-        carritosDao = new daoCarritosMongo();
+        productosDao = new ProductosDaoMongo();
+        carritosDao = new CarritosDaoMongo();
         break;
 
     case 'firebase':
